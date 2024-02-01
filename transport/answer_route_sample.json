@@ -1,0 +1,396 @@
+{
+  'bounds': {
+    'northeast': {
+      'lat': 52.3409583,
+      'lng': 4.8740526
+    },
+    'southwest': {
+      'lat': 52.283015,
+      'lng': 4.844657
+    }
+  },
+  'copyrights': 'Map data ©2023',
+  'legs': [
+    {
+      'arrival_time': {
+        'text': '6:19\u202fPM',
+        'time_zone': 'Europe/Amsterdam',
+        'value': 1700327966
+      },
+      'departure_time': {
+        'text': '5:48\u202fPM',
+        'time_zone': 'Europe/Amsterdam',
+        'value': 1700326102
+      },
+      'distance': {
+        'text': '8.8 km',
+        'value': 8794
+      },
+      'duration': {
+        'text': '31 mins',
+        'value': 1864
+      },
+      'end_address': 'Zuidas, Amsterdam, Netherlands',
+      'end_location': {
+        'lat': 52.33825299999999,
+        'lng': 4.8730553
+      },
+      'start_address': 'Poortwachter, 1188 CP Amstelveen, Netherlands',
+      'start_location': {
+        'lat': 52.2832854,
+        'lng': 4.8451277
+      },
+      'steps': [
+        {
+          'distance': {
+            'text': '42 m',
+            'value': 42
+          },
+          'duration': {
+            'text': '1 min',
+            'value': 38
+          },
+          'end_location': {
+            'lat': 52.2832134,
+            'lng': 4.844668899999999
+          },
+          'html_instructions': 'Walk to Amstelveen, Poortwachter',
+          'polyline': {
+            'points': 'qqb~Haiq\\ANAR?JVHC`@'
+          },
+          'start_location': {
+            'lat': 52.2832854,
+            'lng': 4.8451277
+          },
+          'steps': [
+            {
+              'distance': {
+                'text': '17 m',
+                'value': 17
+              },
+              'duration': {
+                'text': '1 min',
+                'value': 17
+              },
+              'end_location': {
+                'lat': 52.2833055,
+                'lng': 4.8448864
+              },
+              'html_instructions': 'Head <b>west</b><div style="font-size:0.9em">Take the stairs</div>',
+              'polyline': {
+                'points': 'qqb~Haiq\\ANAR?J'
+              },
+              'start_location': {
+                'lat': 52.2832854,
+                'lng': 4.8451277
+              },
+              'travel_mode': 'WALKING'
+            },
+            {
+              'distance': {
+                'text': '13 m',
+                'value': 13
+              },
+              'duration': {
+                'text': '1 min',
+                'value': 11
+              },
+              'end_location': {
+                'lat': 52.2831884,
+                'lng': 4.8448445
+              },
+              'html_instructions': 'Turn <b>left</b> toward <b>De Uitvlugt</b>',
+              'maneuver': 'turn-left',
+              'polyline': {
+                'points': 'uqb~Hqgq\\VH'
+              },
+              'start_location': {
+                'lat': 52.2833055,
+                'lng': 4.8448864
+              },
+              'travel_mode': 'WALKING'
+            },
+            {
+              'distance': {
+                'text': '12 m',
+                'value': 12
+              },
+              'duration': {
+                'text': '1 min',
+                'value': 10
+              },
+              'end_location': {
+                'lat': 52.2832134,
+                'lng': 4.844668899999999
+              },
+              'html_instructions': 'Turn <b>right</b> onto <b>De Uitvlugt</b><div style="font-size:0.9em">Destination will be on the left</div>',
+              'maneuver': 'turn-right',
+              'polyline': {
+                'points': '}pb~Hggq\\C`@'
+              },
+              'start_location': {
+                'lat': 52.2831884,
+                'lng': 4.8448445
+              },
+              'travel_mode': 'WALKING'
+            }
+          ],
+          'travel_mode': 'WALKING'
+        },
+        {
+          'distance': {
+            'text': '8.4 km',
+            'value': 8360
+          },
+          'duration': {
+            'text': '25 mins',
+            'value': 1500
+          },
+          'end_location': {
+            'lat': 52.34097,
+            'lng': 4.874032
+          },
+          'html_instructions': 'Bus towards Amsterdam Station Zuid',
+          'polyline': {
+            'points': '{pb~Hcfq\\EABa@Dm@Dk@Fu@JaB@OMKOEMEQEKCEAG?G?m@O[GMW]gAGYMc@K]Dc@De@B_@Fw@BO`@_G@G@G@WHmA@G@YFw@?M@A@A@A?CBMB_@De@?C@U@MBOB[@WB_@@A@Q@[B]BY@S?C?A?CAC?AACAA?AAAA?AAAAA?ECYIKCSECAOEw@QqAYWISG?@A?A?A?KCUGGCECOGMEQGQEQEUGq@Ko@QQK[Ia@OKE_@K]KeAUkD{@SG_@Ik@Kq@Ii@GGAi@Ea@Ca@AaAA[A{@C]?AC?AAA?AAA?AA??AAAAAA?AAA?A?A?A?A?A??@A?A@A@?@A??@A@?@A@?@A@W?K?M?S@]?k@?MAKBIBQ?kAAKGA?KAMAC?[AYAQ@]CWC?ECGAECCCAAAEAA?C@C@CBCBABADABWBE?K@U@E@MFC?AAaACkBAIAo@A[Ao@AA?{@AuACgAA]AEEEAO?g@A]A]Ca@AKEOCQC]I]IaAWCA@DYBMGQ@UDWDC?aABA?QCg@UUMQIKEECIEeAo@gB_Ac@k@ECUUk@]KEQOYOYMWIUCOIKA?@m@SOCA?Ae@?]A]?_@AwAi@QyAe@Q~@Ed@IPCLE^EJCJKTI@m@NkA^IBuAV}AHqAJqAHw@AUGKIGAG?OHIFGHQDa@@qBEgDACEGAICQ?CBG@EHMC_@@iFIaG?i@AA??A]?W?cAA}AASAo@AaAAoACWAA?Y?U?YAe@AM?eCIIAY?a@@E?E?E?C?CAIEAAAAA?A??AA?A?A@A?A??@A??@A??@A??@SESEOEIAQCE?MAIAWCE?]EEAi@Ec@Ae@Cg@CQCw@?A?gAEaBIs@COAWCe@A_@AuAEe@CI?]Aa@?O?w@Eo@CcAEu@Ec@CM?O?S@M?U@C?CBC@I?EAG?G?}@Dw@?ECA?AAI?UCQAe@CMAQ?QAE?I?I?I@I?G@I@_@BI@C@IBeF@i@?E?wC@q@?W?E?U?_@@O?E?IAGAEAaAC[AYAS@I?I@I@G?G@M?K@G?Q?e@?W?s@?q@?k@?q@Ae@@e@?E?QC]Bw@?Q?w@?i@?Y@uA@i@Aa@AE?C?EAC?E?CAGAE?IAKAA?MAM@IBS@E@Q?W@OAKAG?EAI@M?I@I?UBS@Q@OAM?U@m@AICOCsAUy@G@I@M?I?Y?M?S?{B@iD?a@?W?w@@_@?S?u@?Q@cC?{@?W?A?QAW?mN?aBTyC?S?m@?y@?{@Ak@AW?K?O?E?M?e@?G?Y?uA?oB?]?K?UQ?c@C}@?e@?e@?uB@[AW?]@W@oANWBQBE?A?gABY@mCJU@K@{@DY@a@B_ABm@Dc@BUBIa@AEAK?Q?S?[?a@CqBAi@?U?a@Ak@EkCCsACSGqE@MAW@IA[?O?E?EC{@?g@AYg@B'
+          },
+          'start_location': {
+            'lat': 52.283182,
+            'lng': 4.844657
+          },
+          'transit_details': {
+            'arrival_stop': {
+              'location': {
+                'lat': 52.34097,
+                'lng': 4.874032
+              },
+              'name': 'Amsterdam, Station Zuid'
+            },
+            'arrival_time': {
+              'text': '6:14\u202fPM',
+              'time_zone': 'Europe/Amsterdam',
+              'value': 1700327640
+            },
+            'departure_stop': {
+              'location': {
+                'lat': 52.283182,
+                'lng': 4.844657
+              },
+              'name': 'Amstelveen, Poortwachter'
+            },
+            'departure_time': {
+              'text': '5:49\u202fPM',
+              'time_zone': 'Europe/Amsterdam',
+              'value': 1700326140
+            },
+            'headsign': 'Amsterdam Station Zuid',
+            'line': {
+              'agencies': [
+                {
+                  'name': 'Connexxion',
+                  'phone': '011 31 900 2666399',
+                  'url': 'http://www.connexxion.nl/'
+                }
+              ],
+              'color': '#d1ea32',
+              'name': 'Uithoorn Busstation - Amsterdam Station Zuid',
+              'short_name': '348',
+              'text_color': '#000000',
+              'url': 'http://www.connexxion.nl/dienstregeling/lijn?ID=M348',
+              'vehicle': {
+                'icon': '//maps.gstatic.com/mapfiles/transit/iw2/6/bus2.png',
+                'name': 'Bus',
+                'type': 'BUS'
+              }
+            },
+            'num_stops': 11
+          },
+          'travel_mode': 'TRANSIT'
+        },
+        {
+          'distance': {
+            'text': '0.4 km',
+            'value': 392
+          },
+          'duration': {
+            'text': '5 mins',
+            'value': 326
+          },
+          'end_location': {
+            'lat': 52.33825299999999,
+            'lng': 4.8730553
+          },
+          'html_instructions': 'Walk to Zuidas, Amsterdam, Netherlands',
+          'polyline': {
+            'points': '_zm~Hu}v\\@z@?F@N?NBV@v@@?F??@RCLAJAJAJAL?LALAH?N@LAb@C\\CNA?GZBb@Gb@Ib@IHCVCb@Eb@Eb@E?n@Af@?B@@?@@@B?BA'
+          },
+          'start_location': {
+            'lat': 52.3409583,
+            'lng': 4.8740306
+          },
+          'steps': [
+            {
+              'distance': {
+                'text': '62 m',
+                'value': 62
+              },
+              'duration': {
+                'text': '1 min',
+                'value': 52
+              },
+              'end_location': {
+                'lat': 52.3408959,
+                'lng': 4.8731265
+              },
+              'html_instructions': 'Head <b>west</b> on <b>Strawinskylaan</b>',
+              'polyline': {
+                'points': '_zm~Hu}v\\@z@?F@N?NBV@v@@?'
+              },
+              'start_location': {
+                'lat': 52.3409583,
+                'lng': 4.8740306
+              },
+              'travel_mode': 'WALKING'
+            },
+            {
+              'distance': {
+                'text': '0.1 km',
+                'value': 133
+              },
+              'duration': {
+                'text': '2 mins',
+                'value': 112
+              },
+              'end_location': {
+                'lat': 52.3396896,
+                'lng': 4.8732469
+              },
+              'html_instructions': 'Take the crosswalk<div style="font-size:0.9em">Take the stairs</div>',
+              'polyline': {
+                'points': 'sym~Haxv\\F??@RCLAJAJAJAL?LALAH?N@LAb@C\\CNA'
+              },
+              'start_location': {
+                'lat': 52.3408959,
+                'lng': 4.8731265
+              },
+              'travel_mode': 'WALKING'
+            },
+            {
+              'distance': {
+                'text': '3 m',
+                'value': 3
+              },
+              'duration': {
+                'text': '1 min',
+                'value': 2
+              },
+              'end_location': {
+                'lat': 52.3396912,
+                'lng': 4.873289300000001
+              },
+              'html_instructions': 'Turn <b>left</b> onto <b>Zuidplein</b>',
+              'maneuver': 'turn-left',
+              'polyline': {
+                'points': 'arm~Hyxv\\?G'
+              },
+              'start_location': {
+                'lat': 52.3396896,
+                'lng': 4.8732469
+              },
+              'travel_mode': 'WALKING'
+            },
+            {
+              'distance': {
+                'text': '16 m',
+                'value': 16
+              },
+              'duration': {
+                'text': '1 min',
+                'value': 11
+              },
+              'end_location': {
+                'lat': 52.3395501,
+                'lng': 4.8732653
+              },
+              'html_instructions': 'Turn <b>right</b>',
+              'maneuver': 'turn-right',
+              'polyline': {
+                'points': 'arm~Hayv\\ZB'
+              },
+              'start_location': {
+                'lat': 52.3396912,
+                'lng': 4.873289300000001
+              },
+              'travel_mode': 'WALKING'
+            },
+            {
+              'distance': {
+                'text': '0.1 km',
+                'value': 140
+              },
+              'duration': {
+                'text': '2 mins',
+                'value': 117
+              },
+              'end_location': {
+                'lat': 52.3383,
+                'lng': 4.873545
+              },
+              'html_instructions': 'Slight <b>left</b>',
+              'maneuver': 'turn-slight-left',
+              'polyline': {
+                'points': 'eqm~H}xv\\b@Gb@Ib@IHCVCb@Eb@Eb@E'
+              },
+              'start_location': {
+                'lat': 52.3395501,
+                'lng': 4.8732653
+              },
+              'travel_mode': 'WALKING'
+            },
+            {
+              'distance': {
+                'text': '38 m',
+                'value': 38
+              },
+              'duration': {
+                'text': '1 min',
+                'value': 32
+              },
+              'end_location': {
+                'lat': 52.33825299999999,
+                'lng': 4.8730553
+              },
+              'html_instructions': 'Turn <b>right</b><div style="font-size:0.9em">Destination will be on the right</div>',
+              'maneuver': 'turn-right',
+              'polyline': {
+                'points': 'kim~Hszv\\?n@Af@?B@@?@@@B?BA'
+              },
+              'start_location': {
+                'lat': 52.3383,
+                'lng': 4.873545
+              },
+              'travel_mode': 'WALKING'
+            }
+          ],
+          'travel_mode': 'WALKING'
+        }
+      ],
+      'traffic_speed_entry': [],
+      'via_waypoint': []
+    }
+  ],
+  'overview_polyline': {
+    'points': 'qqb~Haiq\\Cb@?JVHC`@D@EABa@JyARwC@OMK]K]IMAu@O[GMWe@aBYaAVaDh@_HNgCFeABCHs@VqDNaCCMEEiA]qD{@SEC?k@Ou@Yc@KgASo@QQK}@Yk@QcBa@_EcAkAUmCYaDIyACAEACGIGAI@GHABe@BkB@u@DkAAKGMAgAEo@AWC?EEMGEMAMLCH]Ba@BSHsDGeCG{EG]AEEUAeCIkAW_Ba@CA@DYBMGg@F[DcABQCg@Ug@WaB_AgB_Ac@k@[Yw@c@k@_@q@WUCOIK?}@WCe@A{@AwBi@QyAe@Q~@Ed@IPIl@IVKTI@yBn@_BZoDTqAHw@AUGKIOAYPGHQDsCCgDACEQEQ?CBG@EHMC_@@iFIaG?k@A]AmEEyEIoGOgA@I?MGCCA?G?E@ABi@Iq@Ku@GqBOmAGQCw@?iAEuCMmBIcDKq@?gBIkDOgABGBM@MAeADw@?ECCAwAIw@Cg@@q@FMBIBeF@o@?iE@sA@U?QC}BI{AH{GAcBA_DBcE@q@Cs@G[?]DW@g@?c@Aw@De@B]AcA?YGsAUy@GBW?eABaO?cW?aBTyC?aACyD?mE?oDyCCoE?u@BgBRYBeGRcCLgDPKg@A]CcECmCI_FKeF?kACwAAaAe@BBbBDnAH?l@Er@EVA\\?`AGNA?GZBb@GfAShBSb@E?n@Aj@FDBA'
+  },
+  'summary': '',
+  'warnings': [
+    'Walking directions are in beta. Use caution – This route may be missing sidewalks or pedestrian paths.'
+  ],
+  'waypoint_order': []
+}
+
+
+
+[{'address_components': [{'long_name': '1188 DM', 'short_name': '1188 DM', 'types': ['postal_code']}, {'long_name': 'Amstelveen', 'short_name': 'Amstelveen', 'types': ['locality', 'political']}, {'long_name': 'Amstelveen', 'short_name': 'Amstelveen', 'types': ['administrative_area_level_2', 'political']}, {'long_name': 'North Holland', 'short_name': 'NH', 'types': ['administrative_area_level_1', 'political']}, {'long_name': 'Netherlands', 'short_name': 'NL', 'types': ['country', 'political']}], 'formatted_address': '1188 DM Amstelveen, Netherlands', 'geometry': {'bounds': {'northeast': {'lat': 52.2861348, 'lng': 4.847174799999999}, 'southwest': {'lat': 52.2833546, 'lng': 4.8434262}}, 'location': {'lat': 52.2850817, 'lng': 4.8454102}, 'location_type': 'APPROXIMATE', 'viewport': {'northeast': {'lat': 52.2861348, 'lng': 4.847174799999999}, 'southwest': {'lat': 52.2833546, 'lng': 4.8434262}}}, 'place_id': 'ChIJYVWqQSLgxUcRDNJN1EOl5zI', 'types': ['postal_code']}]
+
+Process finished with exit code 0

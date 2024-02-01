@@ -1,0 +1,237 @@
+{% extends 'base.html'%}
+
+{% block content %}
+
+<div id="app">
+    <div class="header">
+        <h1>Hi, {{user_name}}</h1>
+
+        <div class="date-time">
+            <div id="dateDisplay">
+                <p><span id="time">{{ time }}</span></p>
+            </div>
+            <div id="timeDisplay"></div>
+            <p>{{ time }}</p>
+        </div>
+
+
+    </div>
+
+    <!-- Blocks for Calendar, Weather, etc. -->
+
+    <!-- Transport -->
+
+<div class="container">
+    <div class="block">
+        <div class="icon">
+            <img src="static/images/transport.png" alt="transport Icon" style="width: 30px; height: 30px;">
+        </div>
+        <div>
+            {% for transport_type, stations in grouped_transport.items() %}
+                <h2>{{ transport_type|title }}</h2>
+                {% for station_pair, transports in stations.items() %}
+                    <h3>{{ transports[0].type }} № {{ transports[0].line }}</h3>
+                    <p>{{ station_pair[0] }} --> {{ station_pair[1] }}</p>
+                    <ul>
+                        {% for transport in transports %}
+                            <li>{{ transport.departure_time.replace('\u202f', ' ') }} - {{ transport.arrival_time.replace('\u202f', ' ') }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endfor %}
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+    <!-- Calendar Block -->
+    <div class="container">
+        <div class="block">
+            <div class="icon">
+                <img src="static/images/calendar.png" alt="calendar Icon" style="width: 30px; height: 30px;">
+            </div>
+            <style>
+
+
+            </style>
+
+            <table>
+                <tr>
+                    <th>01 MON</th>
+                    <th>02 TUE</th>
+                    <th>03 WED</th>
+                    <th>04 THU</th>
+                    <th>05 FRI</th>
+                    <th>06 SAT</th>
+                    <th>07 SUN</th>
+                </tr>
+                <tr>
+                    <td>meeting</td> <!-- Sunday -->
+                    <td>birthday</td> <!-- Monday -->
+                    <td></td> <!-- Tuesday -->
+                    <td></td> <!-- Wednesday -->
+                    <td></td> <!-- Thursday -->
+                    <td>call doctor</td> <!-- Friday -->
+                    <td></td> <!-- Saturday -->
+                </tr>
+            </table>
+
+        </div>
+
+        <!-- Weather Block -->
+        <div class="block">
+            <div class="icon">
+                <img src="static/images/weather.png"
+                     alt="weather Icon" style="width: 30px; height: 30px;">️
+            </div>
+            <ul>
+                <p>{{ weather['today_forecast']['stationname'] }}</p>
+                <p>Today:</p>
+                <li>Feel temp: {{ weather['today_forecast']['feeltemperature']}}°C</li>
+                <li>Max temp: {{ weather['today_forecast']['maxtemp'] }}°C</li>
+                <li>Rain: {{ weather['today_forecast']['rainchance'] }}%</li>
+                <li>Wind: {{ weather['today_forecast']['windforce'] }}bft</li>
+                <p></p>
+                <p>Tomorrow:</p>
+                <li>Max temp: {{ weather['tomorrow_forecast']['maxtemp'] }}°C</li>
+                <li>Rain: {{ weather['tomorrow_forecast']['rainchance'] }}%</li>
+                <li>Wind: {{ weather['tomorrow_forecast']['windforce'] }}bft</li>
+            </ul>
+        </div>
+
+
+    </div>
+
+    <div class="block">
+        <div class="icon">
+            <img src="static/images/waste.jpeg" alt="waste Icon" style="width: 30px; height: 30px;"></div>
+        <ul>
+            {% for entry in waste %}
+            <li>{{ entry['Date'] }} {{ entry['Type'] }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <!-- Groceries -->
+    <div class="block">
+        <div>
+            <img src="static/images/groceries.png"
+                 alt="groceries Icon" style="width: 30px; height: 30px;">
+        </div>
+        {% for task in tasks %}
+        <div class="card mb-3" :key="task.id">
+            <div class="card-body row justify-content-between px-4">
+                {{ task.title }}
+                <button type="submit" class="btn-close"></button>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Tasks -->
+    <div class="block">
+        <div class="icon">
+            <img src="static/images/todo.png" alt="todo Icon" style="width: 30px; height: 30px;">
+        </div>
+        <div class="todo-container">
+
+            <ul class="todo-list">
+                <li class="todo-item">
+                    <input type="checkbox" id="todo1">
+                    <label for="todo1">Task 1</label>
+                </li>
+                <li class="todo-item">
+                    <input type="checkbox" id="todo2">
+                    <label for="todo2">Task 2</label>
+                </li>
+                <li class="todo-item">
+                    <input type="checkbox" id="todo3">
+                    <label for="todo3">Task 3</label>
+                </li>
+
+            </ul>
+        </div>
+
+
+    </div>
+    <!-- Babysitting -->
+    <div class="block">
+        <div class="icon">
+            <img src="static/images/baby.png" alt="baby Icon" style="width: 30px; height: 30px;">
+        </div>
+        <ul class="todo-list">
+            <p>Choose your option:</p>
+            <li class="todo-item">
+                <input type="checkbox" id="option1">
+                <label for="todo1">Saturday</label>
+            </li>
+            <li class="todo-item">
+                <input type="checkbox" id="option2">
+                <label for="todo2">Sunday</label>
+            </li>
+
+        </ul>
+
+    </div>
+    <!-- Message -->
+    <!-- Message Block -->
+    <div class="block">
+        <div class="icon">
+            <img src="static/images/message.png"
+                 alt="Message Icon" style="width: 30px; height: 30px;">
+        </div>
+
+        <!-- Message Form -->
+        <form action="/path-to-your-server-endpoint" method="post">
+            <textarea name="message" placeholder="Write your message here" rows="4" cols="50"></textarea>
+            <br>
+            <button type="submit">Send</button>
+        </form>
+    </div>
+
+
+    <form @submit.prevent="createTask">
+        <!-- ... (your form HTML) -->
+    </form>
+
+
+</div>
+
+<script>
+   setInterval(updateTime, 1000);
+
+function updateTime() {
+    var now = new Date();
+
+    // Options for displaying the date
+    var dateOptions = {
+        day: '2-digit',
+        month: 'short',
+        year: 'numeric',
+        timeZone: "Europe/Amsterdam"
+    };
+
+    // Options for displaying the time
+    var timeOptions = {
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false,
+        timeZone: "Europe/Amsterdam"
+    };
+
+    // Getting the elements
+    var dateDisplay = document.getElementById("dateDisplay");
+    var timeDisplay = document.getElementById("timeDisplay");
+
+    // Formatted date and time
+    var formattedDate = now.toLocaleDateString("en-US", dateOptions);
+    var formattedTime = now.toLocaleTimeString("en-US", timeOptions);
+
+    // Updating the elements
+    dateDisplay.innerHTML = formattedDate;
+    timeDisplay.innerHTML = formattedTime;
+}
+
+</script>
+
+{% endblock %}

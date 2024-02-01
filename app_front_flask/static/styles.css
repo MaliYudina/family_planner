@@ -1,0 +1,86 @@
+/* General Body Styling */
+body {
+    background-color: #ed8a63;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Header Styling */
+.header {
+    display: flex;
+    justify-content: left;
+    align-items: left;
+    padding: 20px;
+    background-color: #c9af98;
+}
+
+/* Date and Time Styling */
+.date-time {
+    margin: 10px 0;
+    font-size: 1.5em;
+    justify-content: right;
+     align-items: right;
+     background-color: #c9bf90
+}
+
+/* Main Container Styling */
+.container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* maximum two columns */
+    grid-gap: 30px;
+    margin: 20px auto;
+    max-width: 90%;
+    padding: 10px;
+}
+
+/* Block Styling */
+.block {
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    padding: 20px;
+    padding-top: 50px; /* Increased top padding to prevent overlap with the icon */
+    background-color: #c9af98;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    position: relative; /* Needed for absolute positioning of the icon */
+}
+
+/* Icon Styling */
+.icon {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 40px;
+    height: 40px;
+}
+
+.icon img {
+    width: 100%;
+    height: 100%;
+}
+
+
+/* Table Styling within Blocks */
+.container .block table {
+    width: 90%;
+    border-collapse: collapse;
+}
+
+.container .block th, .container .block td {
+    padding: 10px;
+    text-align: left;
+}
+
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .header {
+        flex-direction: column;
+    }
+    .date-time {
+        font-size: 0.9em;
+    }
+    .container {
+        grid-template-columns: 1fr; /* One column in smaller screens */
+    }
+}

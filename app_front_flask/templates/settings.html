@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Settings</title>
+    <link rel="stylesheet" href="path/to/your/css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Settings</h1>
+        <form action="/update-settings" method="post">
+            <!-- Example User Profile Settings -->
+            <fieldset>
+                <legend>User Profile:</legend>
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username"><br><br>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email"><br><br>
+
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password"><br><br>
+            </fieldset>
+
+            <!-- Example Application Settings -->
+            <fieldset>
+                <legend>Application:</legend>
+                <label for="notifications">Enable Notifications:</label>
+                <input type="checkbox" id="notifications" name="notifications"><br><br>
+
+                <label for="theme">Select Theme:</label>
+                <select name="theme" id="theme">
+                    <option value="light">Light</option>
+                    <option value="dark">Dark</option>
+                </select><br><br>
+            </fieldset>
+
+            <!-- Submit Button -->
+            <input type="submit" value="Save Changes">
+        </form>
+    </div>
+
+    <!-- Optionally include your JavaScript file -->
+    <script src="path/to/your/js/script.js"></script>
+</body>
+</html>
