@@ -20,3 +20,18 @@ class Task(db.Model):
 
     def __repr__(self):
         return f'<Task id: {self.id} - {self.title}'
+
+
+@dataclass
+class Message(db.Model):
+    id: int
+    text: str
+    timestamp: datetime
+
+    __tablename__ = 'message'
+    id = db.Column(db.Integer(), primary_key=True)
+    text = db.Column(db.String(500))
+    timestamp = db.Column(db.DateTime(), default=datetime.now)
+
+    def __repr__(self):
+        return f'<Message id: {self.id} - {self.text}>'

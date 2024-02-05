@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div id="app">
+    <div class="message-block">
+    {% for msg in messages %}
+     <p>{{ msg.text }}</p>
+        <small>{{ msg.timestamp }}</small>
+    {% endfor %}
+
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://unpkg.com/vue@next"></script>
+<script>
+    const { createApp } = Vue;
+
+    const MessageApp = {
+        data() {
+            return {
+                messages: [] // Initialize messages array
+            };
+        },
+        created() {
+            this.fetchMessages();
+            setInterval(this.fetchMessages, 5000); // Fetch new messages every 5 seconds
+        },
+        methods: {
+            fetchMessages() {
+                fetch('/get-messages')
+                    .then(response => response.json())
+                    .then(data => {
+                        this.messages = data; // Update messages array with fetched data
+                    })
+                    .catch(error => console.error('Error:', error));
+            }
+        },
+        delimiters: ['[[', ']]'] // Change delimiters to avoid conflicts with Jinja2
+    };
+
+    createApp(MessageApp).mount("#app");
+</script>
+{% endblock %}

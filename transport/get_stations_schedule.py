@@ -6,7 +6,7 @@ from pprint import pprint
 from collections import defaultdict
 
 # Path to the config file (one level up from the script)
-config_file_path = os.path.join(os.path.dirname(__file__), '..', 'cred_config.ini')
+config_file_path = os.path.join(os.path.dirname(__file__), '..', 'credentials_config.ini')
 
 # Read the config.ini file
 config = configparser.ConfigParser()
@@ -53,17 +53,17 @@ def extract_transit_data(response, existing_entries):
 
 
 def get_transportation_schedule_one_hour_interval():
-    origin_coordinates = (52.2850817, 4.8454102)
     destination_address = 'Zuidas Amsterdam'
     base_departure_time = datetime.now()
 
     tram_results = defaultdict(list)
     bus_results = defaultdict(list)
+    existing_entries = set()  # Initialize the set to track entries
 
-    for interval in range(0, 17, 7):
+    for interval in range(0, 60, 7):
         departure_time = base_departure_time + timedelta(minutes=interval)
         directions_response = gmaps.directions(
-            origin='Amstelveen, Poortwachter',
+            origin='Amstelveen Stadshart',
             destination=destination_address,
             mode='transit',
             transit_mode='tram|bus',
@@ -75,7 +75,7 @@ def get_transportation_schedule_one_hour_interval():
             continue
 
         for response in directions_response:
-            transit_data = extract_transit_data(response)
+            transit_data = extract_transit_data(response, existing_entries)  # Pass the set here
             for item in transit_data:
                 key = (item['departure_stop'], item['arrival_stop'])
                 if item['type'] == 'TRAM':
@@ -89,8 +89,6 @@ def get_transportation_schedule_one_hour_interval():
 def get_data():
     gmaps_response = get_transportation_schedule_one_hour_interval()
     if gmaps_response:
-        # print('Final Answer:')
-        # pprint(gmaps_response)
         print('----------')
         pprint(gmaps_response)
         return gmaps_response
