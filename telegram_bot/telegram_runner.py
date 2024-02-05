@@ -12,7 +12,7 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 logger = logging.getLogger(__name__)
 
 # Replace 'YOUR_BOT_TOKEN' with your actual bot token
-bot_token = '***REMOVED***'
+bot_token = ''
 
 
 # Define a few command handlers. These usually take the two arguments update and

@@ -165,4 +165,5 @@ cython_debug/
 
 *.ini
 credentials_config.ini
-**/.DS_Store
+.DS_Store
+replace_text.txt
