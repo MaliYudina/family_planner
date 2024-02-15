@@ -1,47 +1,60 @@
-import schedule
+from telegram import Bot
+from telegram.error import TelegramError
+import sqlite3
 import time
-from datetime import datetime
-from telegram import Bot, Update
-import logging
-from telegram.ext import CallbackContext, Updater, CommandHandler, MessageHandler
+import os
+import configparser
+import asyncio
 
-# Enable logging
-logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-                    level=logging.INFO)
+# Configuration
+# Path to the config file (one level up from the script)
+config_file_path = os.path.join(os.path.dirname(__file__), '..', 'credentials_config.ini')
+db_file_path = os.path.join(os.path.dirname(__file__), '..', 'app_front_flask', 'db.sqlite')
+# Read the config.ini file
+config = configparser.ConfigParser()
+config.read(config_file_path)
 
-logger = logging.getLogger(__name__)
+# Access the API key
+TELEGRAM_BOT_TOKEN = config.get('telegram', 'api_key')
+TELEGRAM_CHAT_ID = config.get('telegram_chat_id', 'telegram_chat_id_user1')
+DB_PATH = db_file_path
 
-# Replace 'YOUR_BOT_TOKEN' with your actual bot token
-bot_token = ''
-
-
-# Define a few command handlers. These usually take the two arguments update and
-# context. Error handlers also receive the raised TelegramError object in error.
-
-def start(update, context):
-    """Send a message when the command /start is issued."""
-    update.message.reply_text('Hi!')
+# Initialize the bot
+bot = Bot(token=TELEGRAM_BOT_TOKEN)
 
 
-def get_chat_id(update: Update):
-    # Extract chat ID from the update
-    chat_id = update.message.chat_id
-    print("Received message from chat ID:", chat_id)
-    return chat_id
+async def send_telegram_message(message):
+    try:
+        await bot.send_message(chat_id=TELEGRAM_CHAT_ID, text=message)  # Use await for async call
+    except TelegramError as e:
+        print(f"Error sending message: {e}")
 
 
-def send_push_message():
-    bot = Bot(token=bot_token)
-    chat_id = get_chat_id()
-    message = "Good morning! It's 9 am. Time to start your day!"
-    bot.send_message(chat_id=chat_id, text=message)
+
+def check_for_new_messages(last_checked_id):
+    new_last_id = last_checked_id
+    new_messages = []
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+    cursor.execute("SELECT id, text FROM message WHERE id > ?", (last_checked_id,))
+    rows = cursor.fetchall()
+    for row in rows:
+        new_last_id = max(new_last_id, row[0])
+        new_messages.append(row[1])
+    conn.close()
+    return new_last_id, new_messages
 
 
-if __name__ == '__main__':
-    # Schedule the message to be sent every day at 9 am
-    schedule.every().day.at("16:40").do(send_push_message)
-
-    # Keep the script running
+async def main():
+    last_checked_id = 0
     while True:
-        schedule.run_pending()
-        # time.sleep(1)
+        last_checked_id, new_messages = check_for_new_messages(last_checked_id)
+        if new_messages:
+            for message in new_messages:
+                await send_telegram_message(f"Unread message: {message}")  # Await the async function
+        await asyncio.sleep(10)  # Use asyncio.sleep for async sleep
+
+
+
+if __name__ == "__main__":
+    asyncio.run(main())
