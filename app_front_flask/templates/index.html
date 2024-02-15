@@ -24,29 +24,32 @@
     <!-- Transport -->
 
 
-    <div class="container">
-        <div class="block">
-            <div class="icon">
-                <img alt="transport Icon" src="static/images/transport.png" style="width: 30px; height: 30px;">
-            </div>
-            <div>
-                {% for transport_type, stations in grouped_transport.items() %}
-                <h3>{{ transport_type|title }}</h3>
-                {% for station_pair, transports in stations.items() %}
-                <h3>№ {{ transports[0].line }}</h3>
-                <p>{{ station_pair[0] }} --> {{ station_pair[1] }}</p>
-                <ul>
-                    {% for transport in transports %}
-                    <li>{{ transport.departure_time.replace('\u202f', ' ') }} - {{
-                        transport.arrival_time.replace('\u202f', ' ') }}
-                    </li>
-                    {% endfor %}
-                </ul>
-                {% endfor %}
-                {% endfor %}
-            </div>
-
+   <div class="container">
+    <div class="block transport-block">
+        <div class="icon">
+            <img alt="Transport Icon" src="static/images/transport.png" style="width: 30px; height: 30px;">
         </div>
+        {% for transport_type, stations in grouped_transport.items() %}
+            <div class="transport-type">
+                <h3>{{ transport_type | title }}</h3>
+                {% for station_pair, transports in stations.items() %}
+                    <div class="station-info">
+                        <h4>№ {{ transports[0].line }}</h4>
+                        <p>{{ station_pair[0] }} --> {{ station_pair[1] }}</p>
+                        <ul>
+                            {% for transport in transports %}
+                                <li>{{ transport.departure_time.replace('\u202f', ' ') }} -
+                                    {{ transport.arrival_time.replace('\u202f', ' ') }}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
         <!-- Weather -->
         <div class="block">
             <div class="icon">
@@ -121,20 +124,28 @@
 
 
             <!-- Groceries -->
-            <div class="block">
-                <div>
-                    <img alt="groceries Icon"
-                         src="static/images/groceries.png" style="width: 30px; height: 30px;">
-                </div>
-                {% for task in tasks %}
-                <div :key="task.id" class="card mb-3">
-                    <div class="card-body row justify-content-between px-4">
-                        {{ task.title }}
-                        <button class="btn-close" type="submit"></button>
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
+
+<div class="block">
+    <div>
+        <img alt="groceries Icon" src="static/images/groceries.png" style="width: 30px; height: 30px;">
+    </div>
+    <form action="{{ url_for('create_task') }}" method="post">
+        {{ form.hidden_tag() }}
+        <div class="input-group mb-3">
+            {{ form.title(class="form-control") }}
+            <button type="submit" class="btn btn-primary">Add</button>
+        </div>
+    </form>
+    {% for product in groceries %}
+    <div :key="product.id" class="card mb-3">
+        <div class="card-body row justify-content-between px-4">
+            {{ product.title }}
+            <!-- Consider adding a button here for additional actions like delete -->
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
 
             <!-- Tasks -->
             <div class="block">
