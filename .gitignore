@@ -167,3 +167,13 @@ cython_debug/
 credentials_config.ini
 .DS_Store
 replace_text.txt
+db_hints.md
+hints.md
+instructions.md
+google_secret.json
+tocken.pickle
+
+
+mock_transport.py
+
+
