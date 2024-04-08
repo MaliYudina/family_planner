@@ -1,76 +1,10 @@
 /* General Body Styling */
-/* Colourful mode styles as defined above */
-
-
-
 body {
     background-color: #ffffff;
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
 }
-
-.confetti {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  display: none;
-  z-index: 9999; /* Ensures it's above other content */
-  pointer-events: none; /* Allows clicks to pass through */
-}
-
-.confetti-piece {
-  position: absolute;
-  width: 10px;
-  height: 20px;
-  background-color: #ffd700; /* Default color, but we'll add more variety */
-  opacity: 1;
-}
-
-/* Keyframes for falling animation */
-@keyframes fall {
-  0% { transform: translateY(0) rotate(0deg); }
-  25% { transform: translateX(10px) rotate(45deg); }
-  50% { transform: translateY(400px) rotate(90deg); }
-  75% { transform: translateX(-10px) rotate(135deg); }
-  100% { transform: translateY(800px) rotate(180deg); opacity: 0; }
-}
-
-
-/* Applying the animation to confetti pieces with variety in animation */
-.confetti-piece {
-  animation: fall linear forwards;
-  /* Animation duration and delay will be set by JavaScript to add randomness */
-}
-
-/* Example variations in color and size for confetti pieces */
-.confetti-piece:nth-child(3n) {
-  background-color: #17d3ff; /* Blue */
-  width: 8px;
-  height: 13px;
-}
-
-.confetti-piece:nth-child(4n) {
-  background-color: #ff4e91; /* Pink */
-  width: 8px;
-  height: 16px;
-}
-
-.confetti-piece:nth-child(5n) {
-  background-color: #4fff81; /* Green */
-  width: 4px;
-  height: 8px;
-}
-
-.confetti-piece:nth-child(6n) {
-  background-color: #FFA500; /* Orange */
-  width: 4px;
-  height: 8px;
-}
-
 
 /* Header Styling */
 .header {
@@ -88,12 +22,10 @@ body {
     background-color: #ffffff;
 }
 
-
-
 /* Main Container Styling */
 .container {
     display: grid;
-    grid-template-columns: repeat(2, 1fr); /* maximum two columns */
+    grid-template-columns: repeat(2, 1fr); /* Maximum two columns */
     grid-gap: 30px;
     margin: 20px auto;
     max-width: 90%;
@@ -111,6 +43,52 @@ body {
     position: relative; /* Needed for absolute positioning of the icon */
 }
 
+/* Specific styling for Transport Block to display content in two columns */
+.transport-block {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+/* Styling for each transport type section */
+.transport-type {
+    margin-bottom: 20px; /* Adds space between each transport type section */
+    padding: 10px; /* Padding inside each transport type section */
+    border-bottom: 1px solid #eee; /* Visual separator between transport types */
+}
+
+/* Last transport type section doesn't need a border at the bottom */
+.transport-type:last-child {
+    border-bottom: none;
+}
+
+/* Styling for station info within each transport type */
+.station-info {
+    margin-bottom: 15px; /* Adds space between station info blocks */
+    padding: 5px; /* Padding inside each station info block */
+    background-color: #f9f9f9; /* Slight background color for distinction */
+    border-radius: 5px; /* Rounded corners for a smoother look */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Soft shadow for depth */
+}
+
+.station-info h4 {
+    margin-top: 0; /* Removes the top margin from the heading for tighter spacing */
+    color: #333; /* Darker color for better readability */
+}
+
+.station-info ul {
+    list-style-type: none; /* Removes default list styling */
+    padding-left: 0; /* Aligns list items with the rest of the content */
+}
+
+.station-info li {
+    padding: 2px 0; /* Adds vertical padding for list items for better readability */
+    border-bottom: 1px solid #eee; /* Visual separator between list items */
+}
+
+.station-info li:last-child {
+    border-bottom: none; /* Removes border from the last list item */
+}
+
 /* Icon Styling */
 .icon {
     position: absolute;
@@ -124,39 +102,28 @@ body {
     width: 100%;
     height: 100%;
 }
-
-
-/* Table Styling within Blocks */
-.container .block table {
-    width: 90%;
-    border-collapse: collapse;
+.card-body {
+    display: flex;
+    justify-content: space-between; /* This will push the checkbox to the right */
+    align-items: center; /* Align items vertically */
 }
 
-.container .block th, .container .block td {
-    padding: 10px;
-    text-align: left;
+.top-right-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 20px;
 }
 
-    .message-block {
-        border: 1px solid #ccc;
-        padding: 10px;
-        margin-bottom: 10px;
-    }
+.grocery-item {
+    display: flex;
+    align-items: center;
+    /* Additional styling */
+}
 
-    .message-block p {
-        margin: 0;
-        font-size: 16px;
-    }
-
-    .message-block small {
-        display: block;
-        margin-top: 8px;
-        font-size: 12px;
-        color: gray;
-    }
-
-
-
+.strikethrough {
+    text-decoration: line-through;
+}
 
 /* Responsive Design */
 @media (max-width: 768px) {

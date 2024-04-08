@@ -6,20 +6,12 @@
           rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
           crossorigin="anonymous">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css')}}">
-
-    <script src="https://unpkg.com/vue@next"></script>
-
-
+    <script src="https://unpkg.com/vue@3"></script>
     <title>Tulip Tasker</title>
 </head>
-
 <body>
-
 {% block content %}
-
 {% endblock %}
-
-<script type="text/javascript" src="{{ url_for('static', filename='main.js')}}">
-</script>
+<script type="text/javascript" src="{{ url_for('static', filename='main.js')}}"></script>
 </body>
 </html>

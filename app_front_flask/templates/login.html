@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <!-- Optional: Include your preferred CSS framework here -->
+</head>
+<body>
+<div class="container">
+    {% if current_user.is_authenticated %}
+        <div class="alert alert-info" role="alert">
+            You are logged in as {{ current_user.username }}. <a href="{{ url_for('index') }}">Go to the homepage</a>
+        </div>
+    {% else %}
+        <h2>Login</h2>
+        <!-- Display flash messages, if any -->
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            {% for message in messages %}
+              <div class="alert alert-warning" role="alert">{{ message }}</div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+
+        <!-- Login Form -->
+        <form action="{{ url_for('login') }}" method="post">
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required class="form-control">
+            </div>
+            <button type="submit" class="btn btn-primary">Login</button>
+        </form>
+    {% endif %}
+</div>
+</body>
+<!-- Optional: Include your preferred JavaScript library here -->
+
