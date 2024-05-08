@@ -11,8 +11,8 @@ class Config:
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + \
                               str(BASE_DIR.joinpath('db.sqlite'))
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    GOOGLE_CREDENTIALS_PATH = str(PARENT_DIR.joinpath('google_secret.json'))
-
+    GOOGLE_CREDENTIALS_PATH = str(BASE_DIR.joinpath('google_secret.json'))
+    print(GOOGLE_CREDENTIALS_PATH)
 
 
 secret_key = os.getenv('SECRET_KEY', 'no Secret_key found')

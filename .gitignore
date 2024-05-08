@@ -160,20 +160,26 @@ cython_debug/
 #  and can be added to the global gitignore or merged into this file.  For a more nuclear
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 .idea/
+
 .md
 .ini
 
 *.ini
-credentials_config.ini
+config/credentials_config.ini
 .DS_Store
 replace_text.txt
-db_hints.md
-hints.md
-instructions.md
-google_secret.json
+code_hints/db_hints.md
+code_hints/hints.md
+code_hints/instructions.md
+config/google_secret.json
 token.pickle
 
 
 mock_transport.py
 
 
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml

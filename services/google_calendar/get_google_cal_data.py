@@ -3,7 +3,7 @@ from googleapiclient.discovery import build
 from google.auth.transport.requests import Request
 import os
 import pickle
-from app_front_flask.config import Config  # Adjust the import path as necessary
+from config import Config  # Adjust the import path as necessary
 
 # Scopes define the level of access you are requesting from the user
 SCOPES = ['https://www.googleapis.com/auth/calendar.readonly']

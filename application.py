@@ -1,31 +1,29 @@
 import logging
 from flask import Flask
-from flask import jsonify
-from flask import render_template, request, redirect, url_for, flash
-from flask_login import login_user, current_user
+from flask import flash
+from flask_login import login_user
 from flask_login import LoginManager
 
 from dotenv import load_dotenv
-from flask_sqlalchemy import SQLAlchemy
 
-from app_front_flask.extensions import db
-from app_front_flask.config import Config, secret_key
-from app_front_flask.forms import GroceriesForm
+from extensions import db
+from config.config import Config, secret_key
+from forms import GroceriesForm
 
 from datetime import datetime
 from mock_transport import mock_dict_transport
-from waste_calendar.afval import check_waste
-from transport.get_stations_schedule import get_data
-from weather.buienradar_weather import get_buienradar_weather
-from app_front_flask.models import User, Groceries, Message, UserChoice
+from services.waste_calendar.afval import check_waste
+from services.weather.buienradar_weather import get_buienradar_weather
+from models import User, Groceries, Message, UserChoice
 from flask_migrate import Migrate
 from flask_login import login_required, current_user
-from google.oauth2 import id_token
 from google_auth_oauthlib.flow import Flow
 
 load_dotenv('./.flaskenv')
 
-app = Flask(__name__)
+application = Flask(__name__)
+app = application  # this required for AWS deployment
+
 app.config['SECRET_KEY'] = secret_key
 app.config['SQLALCHEMY_ECHO'] = True
 google_json = Config.GOOGLE_CREDENTIALS_PATH
@@ -49,7 +47,7 @@ def load_user(user_id):
     return User.query.get(int(user_id))
 
 
-@app.route('/')
+@application.route('/')
 def index():
     app.logger.debug("loading index")
     # Check if a user is authenticated
@@ -85,7 +83,7 @@ def index():
 
 
 
-@app.route('/register', methods=['POST'])
+@application.route('/register', methods=['POST'])
 def register():
     data = request.get_json()
     username = data.get('username')
@@ -105,7 +103,7 @@ def register():
     return jsonify({'message': 'user registered', 'username': user.username}), 201
 
 
-@app.route('/login', methods=['GET', 'POST'])
+@application.route('/login', methods=['GET', 'POST'])
 def login():
     # Serve the login form on GET requests
     if request.method == 'GET':
@@ -139,7 +137,7 @@ def login():
 
 
 
-@app.route('/settings')
+@application.route('/settings')
 def settings():
     return render_template('settings.html')
 
@@ -147,7 +145,7 @@ def settings():
 from flask import jsonify
 
 
-@app.route('/create', methods=['POST'])
+@application.route('/create', methods=['POST'])
 def create_task():
     print("Create route hit")  # Confirm this route is accessed
     form = GroceriesForm()
@@ -164,7 +162,7 @@ def create_task():
         return jsonify(success=False), 400
 
 
-@app.route('/update/<int:product_id>', methods=['POST'])
+@application.route('/update/<int:product_id>', methods=['POST'])
 def update_product(product_id):
     product = Groceries.query.get_or_404(product_id)
     product.completed = not product.completed
@@ -174,7 +172,7 @@ def update_product(product_id):
 
 
 
-@app.route('/post-message', methods=['POST'])
+@application.route('/post-message', methods=['POST'])
 def post_message():
     message_text = request.form['message']
     message = Message(text=message_text)
@@ -184,7 +182,7 @@ def post_message():
     return 'Message sent', 200
 
 
-@app.route('/messages', methods=['GET'])
+@application.route('/messages', methods=['GET'])
 def get_messages():
     app.logger.debug("fetching messages")
     messages = Message.query.all()
@@ -193,12 +191,12 @@ def get_messages():
 from flask import request, redirect, url_for, render_template
 
 
-@app.route('/choice_submitted/<choice>')
+@application.route('/choice_submitted/<choice>')
 def choice_submitted(choice):
     return render_template('choice_submitted.html', choice=choice)
 
 
-@app.route('/choose', methods=['POST', 'GET'])
+@application.route('/choose', methods=['POST', 'GET'])
 @login_required
 def choose():
     if request.is_json:
@@ -220,4 +218,4 @@ def choose():
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.DEBUG)
-    app.run(debug=True)
+    application.run(debug=True)

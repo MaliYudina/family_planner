@@ -8,8 +8,8 @@ import asyncio
 
 # Configuration
 # Path to the config file (one level up from the script)
-config_file_path = os.path.join(os.path.dirname(__file__), '..', 'credentials_config.ini')
-db_file_path = os.path.join(os.path.dirname(__file__), '..', 'app_front_flask', 'db.sqlite')
+config_file_path = os.path.join(os.path.dirname(__file__), '../..', 'credentials_config.ini')
+db_file_path = os.path.join(os.path.dirname(__file__), '../..', 'app_front_flask', 'db.sqlite')
 # Read the config.ini file
 config = configparser.ConfigParser()
 config.read(config_file_path)

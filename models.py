@@ -1,7 +1,6 @@
 from dataclasses import dataclass, field
 from datetime import datetime
-from app_front_flask.extensions import db
-from flask_sqlalchemy import SQLAlchemy
+from extensions import db
 from werkzeug.security import generate_password_hash, check_password_hash
 
 

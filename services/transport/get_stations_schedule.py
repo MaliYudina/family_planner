@@ -6,7 +6,7 @@ from pprint import pprint
 from collections import defaultdict
 
 # Path to the config file (one level up from the script)
-config_file_path = os.path.join(os.path.dirname(__file__), '..', 'credentials_config.ini')
+config_file_path = os.path.join(os.path.dirname(__file__), '../..', 'credentials_config.ini')
 
 # Read the config.ini file
 config = configparser.ConfigParser()
