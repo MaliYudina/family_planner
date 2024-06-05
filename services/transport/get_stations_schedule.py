@@ -1,22 +1,13 @@
 import googlemaps
 from datetime import datetime, timedelta
+from config.config import Config
 import configparser
 import os
 from pprint import pprint
 from collections import defaultdict
 
-# Path to the config file (one level up from the script)
-config_file_path = os.path.join(os.path.dirname(__file__), '../..', 'credentials_config.ini')
+gmaps = googlemaps.Client(key=Config.GOOGLE_MAPS_API_KEY)
 
-# Read the config.ini file
-config = configparser.ConfigParser()
-config.read(config_file_path)
-
-# Access the API key
-api_key = config.get('google_maps', 'api_key')
-
-# Google Maps Client
-gmaps = googlemaps.Client(key=api_key)
 
 
 def extract_transit_data(response, existing_entries):
@@ -60,7 +51,7 @@ def get_transportation_schedule_one_hour_interval():
     bus_results = defaultdict(list)
     existing_entries = set()  # Initialize the set to track entries
 
-    for interval in range(0, 60, 7):
+    for interval in range(0, 20, 7):
         departure_time = base_departure_time + timedelta(minutes=interval)
         directions_response = gmaps.directions(
             origin='Amstelveen Stadshart',

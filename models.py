@@ -20,7 +20,7 @@ class User(db.Model):
 
     @property
     def is_active(self):
-        return True  # You can add logic to check if the user's account is active
+        return True
 
     @property
     def is_anonymous(self):
@@ -80,6 +80,25 @@ class Groceries(db.Model):
     def __repr__(self):
         return f'<Groceries id: {self.id} - {self.title}'
 
+@dataclass
+class Tasks(db.Model):
+    id: int
+    title: str
+    date: datetime
+    completed: bool
+    __tablename__ = 'tasks'
+    __table_args__ = {'extend_existing': True}
+    id = db.Column(db.Integer(), primary_key=True)
+    title = db.Column(db.String(140))
+    date = db.Column(db.DateTime(), default=datetime.now())
+    completed = db.Column(db.Boolean(), default=False)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    def __repr__(self):
+        return f'<Tasks id: {self.id} - {self.title}'
+
 
 @dataclass
 class Message(db.Model):
@@ -94,3 +113,27 @@ class Message(db.Model):
 
     def __repr__(self):
         return f'<Message id: {self.id} - {self.text}>'
+
+@dataclass
+class Settings(db.Model):
+    id: int
+    username: str
+    route_origin: str
+    route_destination: str
+    email: str
+    telegram_account: str
+    address: str
+
+    __tablename__ = 'settings'
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(64), db.ForeignKey('user.username'), nullable=False)
+    route_origin = db.Column(db.String(128), nullable=False)
+    route_destination = db.Column(db.String(128), nullable=False)
+    email = db.Column(db.String(128), nullable=False)
+    telegram_account = db.Column(db.String(64), nullable=False)
+    address = db.Column(db.String(128), nullable=False)
+
+    user = db.relationship('User', backref=db.backref('settings', lazy=True))
+
+    def __repr__(self):
+        return f'<Settings {self.username} - {self.transportation}>'

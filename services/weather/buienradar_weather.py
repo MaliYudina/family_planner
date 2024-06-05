@@ -11,6 +11,37 @@ TIMEFRAME = 45
 LATITUDE = 52.3124  # Amstelveen
 LONGITUDE = 4.8709
 
+WEATHER_ICONS = {
+    'hot': 'static/images/hot.png',
+    'rainy': 'static/images/rainy.png',
+    'cloudy': 'static/images/cloudy.png',
+    'sunny': 'static/images/sunny.png',
+    'windy': 'static/images/windy.png',
+}
+
+
+def get_weather_icon(maxtemp: float, rainchance: int) -> str:
+    """
+    Get the appropriate weather icon based on temperature and rain chance.
+
+    Args:
+        maxtemp (float): Maximum temperature.
+        rainchance (int): Rain chance percentage.
+
+    Returns:
+        str: Path to the weather icon.
+    """
+    if maxtemp >= 25:
+        return WEATHER_ICONS['hot']
+    elif rainchance >= 50:
+        return WEATHER_ICONS['rainy']
+    elif rainchance > 20:
+        return WEATHER_ICONS['cloudy']
+    elif maxtemp >= 15 and rainchance <= 20:
+        return WEATHER_ICONS['sunny']
+    else:
+        return WEATHER_ICONS['windy']
+
 
 def fetch_weather_data(latitude: float, longitude: float) -> Dict:
     """
@@ -63,6 +94,7 @@ def prepare_forecast(result: Dict) -> Dict:
     """
     today_forecast = {
         "stationname": result["data"]["stationname"],
+        "icon": get_weather_icon(result["data"]["forecast"][0]["maxtemp"], result["data"]["forecast"][0]["rainchance"]),
         "feeltemperature": result["data"]["feeltemperature"],
         "maxtemp": result["data"]["forecast"][0]["maxtemp"],
         "rainchance": result["data"]["forecast"][0]["rainchance"],
@@ -70,6 +102,7 @@ def prepare_forecast(result: Dict) -> Dict:
     }
 
     tomorrow_forecast = {
+        "icon": get_weather_icon(result["data"]["forecast"][0]["maxtemp"], result["data"]["forecast"][0]["rainchance"]),
         "maxtemp": result["data"]["forecast"][1]["maxtemp"],
         "rainchance": result["data"]["forecast"][1]["rainchance"],
         "windforce": result["data"]["forecast"][1]["windforce"],

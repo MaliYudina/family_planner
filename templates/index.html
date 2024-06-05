@@ -1,13 +1,21 @@
-{% extends 'base.html'%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌷Tulip Tasker</title>
+    <link rel="stylesheet" href="static/styles.css">
+</head>
+<body>
+    {% extends 'base.html' %}
 
-{% block content %}
+    {% block content %}
 
-
-
-<div id="app">
-    <div class="header">
-        <h2>Hi, {{user_name}}</h2>
-
+    <!-- Header -->
+    <header class="header">
+        <div class="user-info">
+            <h2>Welcome, {{ user_name }}</h2>
+        </div>
         <div class="date-time">
             <div id="dateDisplay">
                 <p><span id="time">{{ time }}</span></p>
@@ -15,34 +23,36 @@
             <div id="timeDisplay"></div>
             <p>{{ time }}</p>
         </div>
+        <div class="logout">
+            <form action="{{ url_for('logout') }}" method="post">
+                <button type="submit" class="btn btn-default">Logout</button>
+            </form>
+        </div>
+        <div class="settings">
+            <form action="{{ url_for('settings') }}">
+                <button type="submit" class="btn btn-default">Settings</button>
+            </form>
+        </div>
+    </header>
 
-
-    </div>
-
-
-    <!-- Blocks for Calendar, Weather, etc. -->
-
-
-    <!-- Transport -->
-
-
+    <!-- Main container -->
     <div class="container">
+
+        <!-- Transport Block -->
         <div class="block transport-block">
             <div class="icon">
-                <img alt="Transport Icon" src="static/images/transport.png" style="width: 30px; height: 30px;">
+                <img alt="Transport Icon" src="static/images/transport.png">
             </div>
             {% for transport_type, stations in grouped_transport.items() %}
             <div class="transport-type">
-                <h3>{{ transport_type | title }}</h3>
+                <h4>{{ transport_type | title }}</h4>
                 {% for station_pair, transports in stations.items() %}
                 <div class="station-info">
-                    <h4>№ {{ transports[0].line }}</h4>
+                    <h5>№ {{ transports[0].line }}</h5>
                     <p>{{ station_pair[0] }} --> {{ station_pair[1] }}</p>
                     <ul>
                         {% for transport in transports %}
-                        <li>{{ transport.departure_time.replace('\u202f', ' ') }} -
-                            {{ transport.arrival_time.replace('\u202f', ' ') }}
-                        </li>
+                        <li>{{ transport.departure_time.replace('\u202f', ' ') }} - {{ transport.arrival_time.replace('\u202f', ' ') }}</li>
                         {% endfor %}
                     </ul>
                 </div>
@@ -50,35 +60,62 @@
             </div>
             {% endfor %}
         </div>
-    </div>
 
-    <!-- Weather -->
-    <div class="block">
-        <div class="icon">
-            <img alt="weather Icon"
-                 src="static/images/weather.png" style="width: 30px; height: 30px;">️
-        </div>
-        <ul>
+        <!-- Weather Block -->
+        <div class="block weather-block">
+    <div class="icon">
+        <img alt="Weather Icon" src="static/images/weather.png">
+    </div>
             <p>{{ weather['today_forecast']['stationname'] }}</p>
+    <div class="weather-columns">
+        <div class="weather-column">
+
             <p>Today:</p>
-            <li>Feel temp: {{ weather['today_forecast']['feeltemperature']}}°C</li>
-            <li>Max temp: {{ weather['today_forecast']['maxtemp'] }}°C</li>
-            <li>Rain: {{ weather['today_forecast']['rainchance'] }}%</li>
-            <li>Wind: {{ weather['today_forecast']['windforce'] }}bft</li>
-            <p></p>
+            <img alt="Today's Weather Icon" src="{{ weather['today_forecast']['icon'] }}">
+            <ul>
+                <li>Feel temp: {{ weather['today_forecast']['feeltemperature'] }}°C</li>
+                <li>Max temp: {{ weather['today_forecast']['maxtemp'] }}°C</li>
+                <li>Rain: {{ weather['today_forecast']['rainchance'] }}%</li>
+                <li>Wind: {{ weather['today_forecast']['windforce'] }}bft</li>
+            </ul>
+        </div>
+        <div class="weather-column">
             <p>Tomorrow:</p>
-            <li>Max temp: {{ weather['tomorrow_forecast']['maxtemp'] }}°C</li>
-            <li>Rain: {{ weather['tomorrow_forecast']['rainchance'] }}%</li>
-            <li>Wind: {{ weather['tomorrow_forecast']['windforce'] }}bft</li>
-        </ul>
+            <img alt="Tomorrow's Weather Icon" src="{{ weather['tomorrow_forecast']['icon'] }}">
+            <ul>
+                <li>Max temp: {{ weather['tomorrow_forecast']['maxtemp'] }}°C</li>
+                <li>Rain: {{ weather['tomorrow_forecast']['rainchance'] }}%</li>
+                <li>Wind: {{ weather['tomorrow_forecast']['windforce'] }}bft</li>
+            </ul>
+        </div>
     </div>
+</div>
 
 
-    <!-- Calendar Block -->
-    <div class="container">
-        <div class="block">
+
+        <!-- Waste Block -->
+        <div class="block waste-block">
             <div class="icon">
-                <img alt="calendar Icon" src="static/images/calendar.png" style="width: 30px; height: 30px;">
+                <img alt="Waste Icon" src="static/images/waste.jpeg">
+            </div>
+            <ul>
+                {% for entry in waste %}
+                {% if loop.index <= 5 %}
+                <li>
+                    {{ entry['Date'] }}
+                    {% set icon_path = 'images/' ~ entry['Type']|lower ~ '.png' %}
+                    <img id="waste-icon-{{ loop.index }}" alt="{{ entry['Type'] }} Icon" src="{{ url_for('static', filename=icon_path) }}" class="waste-icon">
+                    {{ entry['Type'] }}
+                </li>
+                {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+
+        <!-- Calendar Block -->
+        <div class="block calendar-block">
+            <div class="icon">
+                <img alt="Calendar Icon" src="static/images/calendar.png">
             </div>
             <table>
                 <tr>
@@ -91,173 +128,125 @@
                     <th>07 SUN</th>
                 </tr>
                 <tr>
-                    <td>meeting</td> <!-- Sunday -->
-                    <td>birthday</td> <!-- Monday -->
-                    <td></td> <!-- Tuesday -->
-                    <td></td> <!-- Wednesday -->
-                    <td></td> <!-- Thursday -->
-                    <td>call doctor</td> <!-- Friday -->
-                    <td></td> <!-- Saturday -->
+                    <td>meeting</td>
+                    <td>birthday</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>call doctor</td>
+                    <td></td>
                 </tr>
             </table>
-
         </div>
-
-        <!-- Waste Block -->
-
-        <div class="block">
-            <div>
-                <img alt="waste Icon" src="static/images/waste.jpeg" style="width: 30px; height: 30px;">
-            </div>
-            <ul>
-                {% for entry in waste %}
-                {% if loop.index <= 5 %}
-                <li>
-                    {{ entry['Date'] }}
-                    {% set icon_path = 'images/' ~ entry['Type']|lower ~ '.png' %}
-                    <img alt="{{ entry['Type'] }} Icon"
-                         src="{{ url_for('static', filename=icon_path) }}" style="width: 20px; height: 20px;">
-                    {{ entry['Type'] }}
-                </li>
-                {% endif %}
-                {% endfor %}
-            </ul>
-        </div>
-
-
-        <!-- Groceries -->
-
-       <div class="block">
-    <div>
-        <img alt="groceries Icon" src="static/images/groceries.png" style="width: 30px; height: 30px;">
-    </div>
-
-    <form id="addGroceryForm">
-    {{ form.hidden_tag() }}
-    <div class="input-group mb-3">
-        {{ form.title(class="form-control") }}
-        <button type="submit" id="addGroceryButton" class="btn btn-primary">Add</button>
-    </div>
-</form>
-
-    <!-- Dedicated container for grocery items -->
-    <div id="groceriesList">
-        {% for product in groceries %}
-        <div class="card mb-3" data-product-id="{{ product.id }}">
-            <div class="card-body row justify-content-between px-4 {{ 'strikethrough' if product.completed else '' }}">
-                <div>{{ product.title }}</div>
-                {% if not product.completed %}
-                <!-- Only render the checkbox if the product is not completed -->
-                <input type="checkbox" class="form-check-input" onchange="updateProductStatus(this, {{ product.id }})">
-                {% endif %}
-            </div>
-        </div>
-        {% endfor %}
-    </div>
-</div>
-
-
-
-        <!-- Tasks -->
-        <div class="block">
+<!-- Message Block -->
+        <div class="block message-block">
             <div class="icon">
-                <img alt="todo Icon" src="static/images/todo.png" style="width: 30px; height: 30px;">
+                <img alt="Message Icon" src="static/images/message.png">
             </div>
-            <div class="todo-container">
-
-                <ul class="todo-list">
-                    <li class="todo-item">
-                        <input id="todo1" type="checkbox">
-                        <label for="todo1">Task 1</label>
-                    </li>
-                    <li class="todo-item">
-                        <input id="todo2" type="checkbox">
-                        <label for="todo2">Task 2</label>
-                    </li>
-                    <li class="todo-item">
-                        <input id="todo3" type="checkbox">
-                        <label for="todo3">Task 3</label>
-                    </li>
-
-                </ul>
-            </div>
-
-
-        </div>
-<!-- Babysitting -->
-        <div class="block">
-       <div id="choiceApp">
-    <div class="block" v-if="!submitted">
-        <div class="icon">
-            <img alt="baby Icon" src="static/images/baby.png" style="width: 30px; height: 30px;">
-        </div>
-        <form id="choiceForm" @submit.prevent="submitChoice">
-            <ul class="option-list">
-                <p>Choose your option:</p>
-                <li class="option-item">
-                    <input type="radio" id="option1" name="choice" value="Saturday" v-model="chosenDay">
-                    <label for="option1">Saturday</label>
-                </li>
-                <li class="option-item">
-                    <input type="radio" id="option2" name="choice" value="Sunday" v-model="chosenDay">
-                    <label for="option2">Sunday</label>
-                </li>
-            </ul>
-            <button @click="submitChoice">Submit Choice</button>
-
-        </form>
-        <div v-if="submitted">
-            {% if choices_with_users %}
-    <h3>User Choices</h3>
-    <ul>
-        {% for choice, username in choices_with_users %}
-            <li>{{ username }} chose {{ choice }}</li>
-        {% endfor %}
-    </ul>
-{% else %}
-    <p>No choices have been made yet.</p>
-{% endif %}
-        <button @click="editChoice">Edit</button>
-    </div>
-
-
-
-</div>
-
-</div>
-            </div>
-
-
-        <!-- Message Block -->
-        <div class="block">
-            <div class="icon">
-                <img alt="Message Icon"
-                     src="static/images/message.png" style="width: 30px; height: 30px;">
-            </div>
-
-
-            <!-- Message Form -->
             <form action="/post-message" method="post">
-                <textarea cols="30" name="message" placeholder="Write your message here" rows="2"></textarea>
+                <textarea cols="30" name="message" placeholder="Write your message here" rows="4"></textarea>
                 <br>
                 <button id="sendButton" type="submit">Send</button>
             </form>
-
             <div id="messages">
                 <!-- Messages will be displayed here -->
             </div>
         </div>
 
-        <form @submit.prevent="createTask">
-            <!-- ... (your form HTML) -->
-        </form>
+<!-- Groceries Block -->
+<div class="block groceries-block">
+    <div class="icon">
+        <img alt="Groceries Icon" src="static/images/groceries.png">
+    </div>
+    <div id="groceriesList">
+        {% for product in groceries %}
+        <div class="card" data-product-id="{{ product.id }}">
+            <div class="card-body row justify-content-between px-2 {{ 'strikethrough' if product.completed else '' }}">
+                <div class="grocery-item">
+                    <input type="checkbox" class="form-check-input" onchange="updateProductStatus(this, {{ product.id }}, 'grocery')" {% if product.completed %} checked {% endif %}>
+                    <div>{{ product.title }}</div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <form id="addGroceryForm">
+        {{ form.hidden_tag() }}
+        <div class="input-group">
+            {{ form.title(class="form-control") }}
+            <button type="submit" id="addGroceryButton" class="btn btn-primary">Add</button>
+        </div>
+    </form>
+</div>
+
+<!-- Tasks Block -->
+<div class="block tasks-block">
+    <div class="icon">
+        <img alt="Todo Icon" src="static/images/todo.png">
+    </div>
+    <div id="tasksList">
+        {% for task in tasks %}
+        <div class="card" data-task-id="{{ task.id }}">
+            <div class="card-body row justify-content-between px-2 {{ 'strikethrough' if task.completed else '' }}">
+                <div class="task-item">
+                    <input type="checkbox" class="form-check-input" onchange="updateProductStatus(this, {{ task.id }}, 'task')" {% if task.completed %} checked {% endif %}>
+                    <div>{{ task.title }}</div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <form id="addTaskForm">
+        {{ form.hidden_tag() }}
+        <div class="input-group">
+            {{ form.title(class="form-control") }}
+            <button type="submit" id="addTaskButton" class="btn btn-primary">Add</button>
+        </div>
+    </form>
+</div>
 
 
+        <!-- Babysitting Block -->
+<div class="block babysitting-block">
+    <div class="icon">
+        <img alt="Baby Icon" src="static/images/baby.png">
+    </div>
+    <div id="choiceApp">
+        <div v-if="!submitted">
+            <form id="choiceForm" @submit.prevent="submitChoice">
+                <ul class="option-list">
+                    <p>Choose your option:</p>
+                    <li class="option-item">
+                        <input type="radio" id="option1" name="choice" value="Saturday" v-model="chosenDay">
+                        <label for="option1">Saturday</label>
+                    </li>
+                    <li class="option-item">
+                        <input type="radio" id="option2" name="choice" value="Sunday" v-model="chosenDay">
+                        <label for="option2">Sunday</label>
+                    </li>
+                </ul>
+                <button @click="submitChoice">Submit Choice</button>
+            </form>
+        </div>
+        <div v-if="submitted">
+            <p>Your choice: {{ chosenDay }}</p>
+            <button @click="editChoice">Edit</button>
+        </div>
+    </div>
+</div>
+
+
+
+        <!-- Image Block -->
+         <div class="block photos-block">
+        <div class="photos">
+            <img alt="Random Image" src="static/photos/6.jpg" class="rounded-image">
+        </div>
+    </div>
     </div>
 
 
 
-
-
     {% endblock %}
-</div>
+</body>
+</html>

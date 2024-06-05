@@ -3,44 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <title>Settings</title>
-    <link rel="stylesheet" href="path/to/your/css/styles.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles_settings.css') }}">
 </head>
 <body>
-    <div class="container">
-        <h1>Settings</h1>
-        <form action="/update-settings" method="post">
-            <!-- Example User Profile Settings -->
+    {% extends "base.html" %}
+    {% block content %}
+    <div class="container-settings">
+        <h3>Settings</h3>
+<p class="settings-description">Manage your account details and notification settings</p>
+        <p class="username-display">Logged in as: <strong>{{ settings.username }}</strong></p>
+        <form action="/settings" method="post">
+            <!-- User Profile Settings -->
             <fieldset>
-                <legend>User Profile:</legend>
-                <label for="username">Username:</label>
-                <input type="text" id="username" name="username"><br><br>
+                <legend>User Profile</legend>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" class="form-control" value="{{ settings.email }}" required>
+                </div>
 
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email"><br><br>
+                <div class="form-group">
+                    <label for="telegram_account">Telegram Account:</label>
+                    <input type="text" id="telegram_account" name="telegram_account" class="form-control" value="{{ settings.telegram_account }}">
+                </div>
 
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password"><br><br>
+                <div class="form-group">
+                    <label for="address">Home Address:</label>
+                    <input type="text" id="address" name="address" class="form-control" value="{{ settings.address }}">
+                </div>
             </fieldset>
 
-            <!-- Example Application Settings -->
+            <!-- Transportation Settings -->
             <fieldset>
-                <legend>Application:</legend>
-                <label for="notifications">Enable Notifications:</label>
-                <input type="checkbox" id="notifications" name="notifications"><br><br>
+                <legend>Transportation</legend>
+                <div class="form-group">
+                    <label for="origin">Origin:</label>
+                    <input type="text" id="origin" name="origin" class="form-control" value="{{ settings.transportation[0] }}" required>
+                </div>
 
-                <label for="theme">Select Theme:</label>
-                <select name="theme" id="theme">
-                    <option value="light">Light</option>
-                    <option value="dark">Dark</option>
-                </select><br><br>
+                <div class="form-group">
+                    <label for="destination">Destination:</label>
+                    <input type="text" id="destination" name="destination" class="form-control" value="{{ settings.transportation[1] }}" required>
+                </div>
             </fieldset>
 
             <!-- Submit Button -->
-            <input type="submit" value="Save Changes">
+            <div class="form-group">
+                <input type="submit" class="btn btn-primary" value="Save Changes">
+            </div>
         </form>
+
+
     </div>
+    {% endblock %}
 
     <!-- Optionally include your JavaScript file -->
-    <script src="path/to/your/js/script.js"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>

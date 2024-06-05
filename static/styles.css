@@ -1,139 +1,233 @@
-/* General Body Styling */
-body {
-    background-color: #ffffff;
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
+/* General reset and box-sizing */
+* {
+    box-sizing: border-box;
 }
 
-/* Header Styling */
-.header {
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    font-family: Arial, sans-serif;
+}
+
+/* Header styles */
+header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px;
-    background-color: #ffffff;
-}
-
-/* Date and Time Styling */
-.date-time {
-    margin: 10px 0;
-    font-size: 1.5em;
-    background-color: #ffffff;
-}
-
-/* Main Container Styling */
-.container {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr); /* Maximum two columns */
-    grid-gap: 30px;
-    margin: 20px auto;
-    max-width: 90%;
     padding: 10px;
+    background-color: #f8f8f8;
+    border-bottom: 1px solid #ddd;
 }
 
-/* Block Styling */
-.block {
-    border: 2px solid #ddd;
-    border-radius: 10px;
+.header .user-info,
+.header .date-time,
+.header .logout {
+    flex: 1;
+    text-align: center;
+}
+
+/* Main container styles */
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
     padding: 20px;
-    padding-top: 50px; /* Increased top padding to prevent overlap with the icon */
-    background-color: #ffffff;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    position: relative; /* Needed for absolute positioning of the icon */
+    height: calc(100vh - 70px); /* Adjust header height */
 }
 
-/* Specific styling for Transport Block to display content in two columns */
-.transport-block {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+/* Block styles */
+.block {
+    background-color: #fff;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Align content to the top */
+    align-items: flex-start; /* Align content to the left */
+    max-height: 45vh; /* Maximum height of 45% of the viewport height */
+}
+
+/* Specific block styles */
+.calendar-block {
+    flex: 0 0 66%; /* 2/3 of the screen width */
+    min-width: max-content;
+}
+
+.message-block {
+    flex: 0 0 30%; /* 1/3 of the screen width */
+}
+
+.icon-block {
+    flex: 0 0 33.33%; /* 1/3 of the screen width */
+}
+
+.block:not(.calendar-block):not(.message-block) {
+    flex: 1 1 30%; /* Maximum 33% of the screen width */
+}
+
+.block .icon img {
+    width: 30px;
+    height: 30px;
+    display: block;
+    margin-bottom: 10px;
+}
+
+/* Weather block styles */
+.weather-columns {
+    display: flex;
+    justify-content: space-between;
     gap: 20px;
 }
-/* Styling for each transport type section */
-.transport-type {
-    margin-bottom: 20px; /* Adds space between each transport type section */
-    padding: 10px; /* Padding inside each transport type section */
-    border-bottom: 1px solid #eee; /* Visual separator between transport types */
+
+.weather-column ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
-/* Last transport type section doesn't need a border at the bottom */
-.transport-type:last-child {
-    border-bottom: none;
+.weather-column p {
+    font-weight: bold;
+    margin-bottom: 10px;
 }
 
-/* Styling for station info within each transport type */
-.station-info {
-    margin-bottom: 15px; /* Adds space between station info blocks */
-    padding: 5px; /* Padding inside each station info block */
-    background-color: #f9f9f9; /* Slight background color for distinction */
-    border-radius: 5px; /* Rounded corners for a smoother look */
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Soft shadow for depth */
+/* Groceries and Tasks styles */
+.groceries-block, .tasks-block {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
 }
 
-.station-info h4 {
-    margin-top: 0; /* Removes the top margin from the heading for tighter spacing */
-    color: #333; /* Darker color for better readability */
+#groceriesList, #tasksList {
+    overflow-y: auto;
+    flex-grow: 1;
+    max-height: 50vh;
 }
 
-.station-info ul {
-    list-style-type: none; /* Removes default list styling */
-    padding-left: 0; /* Aligns list items with the rest of the content */
+.card {
+    background-color: #fff;
+    border: none;
+    margin-bottom: 0px;
 }
 
-.station-info li {
-    padding: 2px 0; /* Adds vertical padding for list items for better readability */
-    border-bottom: 1px solid #eee; /* Visual separator between list items */
-}
-
-.station-info li:last-child {
-    border-bottom: none; /* Removes border from the last list item */
-}
-
-/* Icon Styling */
-.icon {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    width: 40px;
-    height: 40px;
-}
-
-.icon img {
-    width: 100%;
-    height: 100%;
-}
 .card-body {
     display: flex;
-    justify-content: space-between; /* This will push the checkbox to the right */
-    align-items: center; /* Align items vertically */
+    align-items: center;
+    padding: 0px;
 }
 
-.top-right-button {
-    position: absolute;
-    top: 0;
-    right: 0;
-    margin: 20px;
-}
-
-.grocery-item {
+.grocery-item, .task-item {
     display: flex;
     align-items: center;
-    /* Additional styling */
+}
+
+.form-check-input {
+    margin-right: 10px;
+}
+
+.input-group {
+    display: flex;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.input-group .form-control {
+    flex-grow: 1;
+    border-radius: 0;
+    margin-right: 0;
+}
+
+.input-group .btn {
+    flex-shrink: 0;
+    border-radius: 0;
 }
 
 .strikethrough {
     text-decoration: line-through;
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-    .header {
-        flex-direction: column;
-    }
-    .date-time {
-        font-size: 0.9em;
-    }
-    .container {
-        grid-template-columns: 1fr; /* One column in smaller screens */
-    }
+/* Styles for the photos block */
+.photos-block img {
+    width: 100%;
+    height: auto;
+    border-radius: 15px; /* Rounded corners */
+    object-fit: cover;
+}
+
+/* Waste icon styles */
+.waste-icon {
+    width: 30px;
+    height: 30px;
+    display: inline-block;
+    object-fit: cover;
+    margin-left: 5px;
+    margin-bottom: 10px; /* Add gap between lines */
+}
+
+/* Transport block styles */
+.transport-block {
+    overflow-y: auto; /* Enable vertical scrolling */
+}
+
+/* Message input field styles */
+.message-block textarea {
+    border-radius: 10px; /* Rounded angles for the input field */
+}
+
+/* Button styles */
+button, .btn {
+    border-radius: 10px; /* Rounded angles for buttons */
+    background-color: grey; /* Grey background for all buttons */
+    color: white;
+}
+/* Ensure the checkbox does not remain blue when checked */
+input[type="checkbox"]:checked {
+    background-color: transparent; /* Remove the blue background */
+    border: 1px solid #ccc; /* Optional: Style the border */
+}
+
+/* Add this to ensure the strikethrough effect */
+.strikethrough {
+    text-decoration: line-through;
+    color: #aaa; /* Optional: change text color for completed items */
+}
+
+/* Settings block */
+
+.container-settings {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    align-self: flex-start; /* Align to the left */
+
+}
+
+fieldset {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    padding: 10px 15px;
+}
+
+legend {
+    font-weight: bold;
+    padding: 0 10px;
+
+}
+
+
+.username-display {
+    text-align: left;
+    margin-bottom: 20px;
+    font-size: 1.2em;
+}
+.header .user-info,
+.header .date-time,
+.header .logout {
+    flex: 1;
+    text-align: left;
 }

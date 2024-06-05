@@ -98,7 +98,7 @@ function fetchMessages() {
     fetch('/get-messages', {
         method: 'GET',
         headers: {
-            'X-CSRFToken': csrf_token, // Make sure this token is correctly obtained from your HTML
+            'X-CSRFToken': csrf_token,
             'Content-Type': 'application/json'
         },
     })
@@ -120,65 +120,123 @@ function fetchMessages() {
     .catch(error => console.error('Error:', error));
 }
 
+document.addEventListener("DOMContentLoaded", function() {
+    const addGroceryForm = document.getElementById('addGroceryForm');
+    addGroceryForm.addEventListener('submit', async function(event) {
+        event.preventDefault();
+        const titleInput = addGroceryForm.querySelector('.form-control');
+        const title = titleInput.value.trim();
 
+        if (title) {
+            const response = await fetch('/add_grocery', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ title })
+            });
 
-// Event Listeners and DOM Manipulation
-document.getElementById('addGroceryForm').addEventListener('submit', function(event) {
-    event.preventDefault(); // Prevent the default form submission
-    console.log("Form submit event triggered.");
-    const formData = new FormData(this); // 'this' refers to the form itself
-    fetch('/create', {
-        method: 'POST',
-        body: formData, // Sending the form data as FormData
-    }).then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            console.log("Product added successfully.");
-            // Insert the new item at the top of the list
-            const groceriesList = document.querySelector('#groceriesList');
-            const newItem = document.createElement('div');
-            newItem.classList.add('card', 'mb-3');
-            newItem.setAttribute('data-product-id', data.product.id);
-            newItem.innerHTML = `
-                <div class="card-body row justify-content-between px-4">
-                    <div>${data.product.title}</div>
-                    ${data.product.completed ? '' : `<input type="checkbox" class="form-check-input" onchange="updateProductStatus(this, ${data.product.id})">`}
+            if (response.ok) {
+    const result = await response.json();
+    if (result.success) {
+        const product = result.item;
+        const groceriesList = document.getElementById('groceriesList');
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.setAttribute('data-product-id', product.id);
+        card.innerHTML = `
+            <div class="card-body row justify-content-between px-2">
+                <div class="grocery-item">
+                    <input type="checkbox" class="form-check-input" onchange="updateProductStatus(this, ${product.id}, 'grocery')">
+                    <div>${product.title}</div>
                 </div>
-            `;
-            groceriesList.insertBefore(newItem, groceriesList.firstChild);
-            document.getElementById('addGroceryForm').reset();
-        } else {
-            alert('Error adding product');
-        }
-    }).catch(error => console.error('Error:', error));
-});
-
-
-function updateProductStatus(checkbox, productId) {
-    const isChecked = checkbox.checked;
-    fetch(`/update/${productId}`, {
-        method: 'POST',
-        body: JSON.stringify({ completed: isChecked }),
-        headers: {
-            'Content-Type': 'application/json',
-        }
-    })
-    .then(response => response.json())
-    .then(data => {
-        const productCard = checkbox.closest('.card.mb-3');
-        if (data.completed) {
-            const groceriesList = document.querySelector('#groceriesList');
-            groceriesList.appendChild(productCard); // Move to bottom
-            checkbox.style.display = 'none'; // Hide checkbox
-            productCard.classList.add('strikethrough'); // Add class to indicate completion
-        } else {
-            checkbox.style.display = 'block'; // Ensure checkbox is visible if item is un-checked
-            productCard.classList.remove('strikethrough'); // Remove strikethrough if item is un-checked
-        }
-    })
-    .catch(error => console.error('Error:', error));
+            </div>
+        `;
+        groceriesList.insertBefore(card, groceriesList.firstChild);  // Insert at the top
+        titleInput.value = '';
+    } else {
+        console.error('Failed to add grocery item:', result.error);
+    }
+} else {
+    console.error('Failed to add grocery item:', response.statusText);
 }
 
+        }
+    });
+
+    const addTaskForm = document.getElementById('addTaskForm');
+    addTaskForm.addEventListener('submit', async function(event) {
+        event.preventDefault();
+        const titleInput = addTaskForm.querySelector('.form-control');
+        const title = titleInput.value.trim();
+
+        if (title) {
+            const response = await fetch('/add_task', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ title })
+            });
+
+            if (response.ok) {
+                const result = await response.json();
+                if (result.success) {
+                    const task = result.item;
+                    const tasksList = document.getElementById('tasksList');
+                    const card = document.createElement('div');
+                    card.className = 'card';
+                    card.setAttribute('data-task-id', task.id);
+                    card.innerHTML = `
+                        <div class="card-body row justify-content-between px-2">
+                            <div class="task-item">
+                                <input type="checkbox" class="form-check-input" onchange="updateProductStatus(this, ${task.id}, 'task')">
+                                <div>${task.title}</div>
+                            </div>
+                        </div>
+                    `;
+                    tasksList.appendChild(card);
+                    titleInput.value = '';
+                } else {
+                    console.error('Failed to add task:', result.error);
+                }
+            } else {
+                console.error('Failed to add task:', response.statusText);
+            }
+        }
+
+    });
+});
+
+async function updateProductStatus(checkbox, id, type) {
+    const completed = checkbox.checked;
+    const response = await fetch('/update_status', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ id, completed, type })
+    });
+
+    if (response.ok) {
+        const result = await response.json();
+        if (result.success) {
+            const item = checkbox.closest('.card');
+            item.querySelector('div').classList.toggle('strikethrough', completed);
+
+            const parentList = item.parentNode;
+            parentList.removeChild(item);
+            parentList.appendChild(item);  // Append item to move it to the bottom
+        } else {
+            console.error('Failed to update status:', result.error);
+        }
+    } else {
+        console.error('Failed to update status:', response.statusText);
+    }
+}
+
+
+
 // Repeated actions
-setInterval(fetchMessages, 105000); // это надо в messages.html
+// setInterval(fetchMessages, 105000); // это надо в messages.html
 setInterval(updateTime, 1000);
