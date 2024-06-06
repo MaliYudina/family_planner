@@ -92,23 +92,12 @@ def index():
                            weather=weather, choices_with_users=choices_with_users)
 
 
-# @app.route('/update_grocery_status/<int:item_id>', methods=['POST'], endpoint='update_grocery_status')
-# @update_status(Groceries)
-# def update_grocery_status(item_id):
-#     pass
-#
-#
-# @app.route('/update_task_status/<int:item_id>', methods=['POST'], endpoint='update_task_status')
-# @update_status(Tasks)
-# def update_task_status(item_id):
-#     pass
-
 @app.route('/add_grocery', methods=['POST'])
 def add_grocery():
     data = request.get_json()
     title = data.get('title')
     if title:
-        new_grocery = Groceries(title=title, completed=False)
+        new_grocery = Groceries(title=title, completed=False, user_id=current_user.id)
         db.session.add(new_grocery)
         db.session.commit()
         return jsonify(success=True,
@@ -121,7 +110,7 @@ def add_task():
     data = request.get_json()
     title = data.get('title')
     if title:
-        new_task = Tasks(title=title, completed=False)
+        new_task = Tasks(title=title, completed=False, user_id=current_user.id)
         db.session.add(new_task)
         db.session.commit()
         return jsonify(success=True, item={'id': new_task.id, 'title': new_task.title, 'completed': new_task.completed})
@@ -256,11 +245,12 @@ def settings():
                 route_destination=route_destination,
                 email=email,
                 telegram_account=telegram_account,
-                address=address
+                address=address,
+                user_id=user.id  # Ensure user_id is set correctly
             )
         else:
-            settings.route_origin = route_origin,
-            settings.route_destination = route_destination,
+            settings.route_origin = route_origin
+            settings.route_destination = route_destination
             settings.email = email
             settings.telegram_account = telegram_account
             settings.address = address
@@ -294,11 +284,10 @@ def settings():
     return render_template('settings.html', settings=settings, user=user)
 
 
-
 @app.route('/post-message', methods=['POST'])
 def post_message():
     message_text = request.form['message']
-    message = Message(text=message_text)
+    message = Message(text=message_text, user_id=current_user.id)
     db.session.add(message)
     db.session.commit()
     return 'Message sent', 200
@@ -344,7 +333,6 @@ def get_choice():
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.DEBUG)
-    create_tables()
-
-
+    with app.app_context():
+        create_tables()
     application.run(debug=True)

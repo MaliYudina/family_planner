@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Upload Photo</title>
+    <style>
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .gallery img {
+            width: 100px;
+            height: 100px;
+            margin: 5px;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+    <h1>Upload Photo</h1>
+    <form method="post" enctype="multipart/form-data">
+        <label for="file">Select a file:</label>
+        <input type="file" name="file" id="file">
+        <br><br>
+        <label for="url">Or enter a URL:</label>
+        <input type="text" name="url" id="url">
+        <br><br>
+        <button type="submit">Upload</button>
+    </form>
+    <br>
+    <a href="/">Back to Home</a>
+
+    <h2>Gallery</h2>
+    <div class="gallery">
+        {% for photo in photos %}
+            <img src="{{ photo }}" alt="Photo">
+        {% endfor %}
+    </div>
+</body>
+</html>
